@@ -19,7 +19,9 @@ An Agent Skill is a directory with a `SKILL.md` file (and optional supporting re
 
 ## Using Skills
 
-Place skills in the directory your agent reads from. For Claude Code, this is typically:
+These skills work with any agent that supports the Agent Skills specification, including Claude Code and OpenCode.
+
+Place skills in the directory your agent reads from:
 
 ```
 ~/.claude/skills/
@@ -29,6 +31,14 @@ Symlink or copy individual skill directories there:
 
 ```bash
 ln -s "$(pwd)/prd" ~/.claude/skills/prd
+```
+
+To install all skills at once:
+
+```bash
+for skill in */; do
+  ln -s "$(pwd)/$skill" ~/.claude/skills/"$skill"
+done
 ```
 
 ## License
