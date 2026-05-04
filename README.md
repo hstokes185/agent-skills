@@ -6,6 +6,10 @@ A collection of Agent Skills — reusable, self-contained instructions that teac
 
 An Agent Skill is a directory with a `SKILL.md` file (and optional supporting resources like scripts, references, and assets) that teaches an AI agent how to perform a specific task. Agents load skill metadata at startup, read full instructions when activated, and pull in additional resources as needed.
 
+## Approach
+
+These skills are designed to work out of the box — drop them in and they handle the task. No per-user configuration, no lengthy setup, no "works on my machine" caveats. Each skill is self-contained and ready the moment it's loaded.
+
 ## Skills
 
 | Skill | Description |
