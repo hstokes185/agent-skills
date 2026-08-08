@@ -140,7 +140,7 @@ An eight-point verification before an agent is built or deployed.
 
 ## References
 
-Frameworks are drawn from practitioner and academic sources, including the works below.
+Frameworks are drawn from practitioner and academic sources, including the works listed above. All instructional content is generic and applies to any enterprise.
 
 - Anthropic — Schluntz, E. and Zhang, B. (2024) 'Building effective agents'. Available at: anthropic.com/engineering/building-effective-agents.
 - Hacker, P. and Holweg, M. (2026) 'A pragmatic approach to regulating AI agents'.

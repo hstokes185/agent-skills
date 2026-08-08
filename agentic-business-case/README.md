@@ -71,4 +71,4 @@ Every framework the skill applies, with a short description. Full definitions ar
 
 ## Attribution
 
-Frameworks are drawn from practitioner and academic sources, including the works below. the sources listed above. The bundled PowerPoint template is the only organisation-specific asset; all instructional content is generic and applies to any enterprise.
+Frameworks are drawn from practitioner and academic sources, including the works listed above. All instructional content is generic and applies to any enterprise.
