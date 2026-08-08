@@ -1,0 +1,40 @@
+# Canonical CI workflow for the TypeScript/React track — copy verbatim
+# into new projects at .github/workflows/ci.yml (or as the `web` job in
+# a monorepo workflow).
+#
+# Gates, in order: install (frozen) → lint → type-check → tests → build.
+# CI does NOT apply formatting — pre-commit owns formatting; CI only
+# verifies via the lint step.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies (fail on lockfile drift)
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Tests
+        run: pnpm test -- --run
+
+      - name: Build
+        run: pnpm build

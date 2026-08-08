@@ -1,10 +1,12 @@
 # Project Constitution (Tier 1: Hot Memory)
 
+> File this as `AGENTS.md` at the repository root — the open standard read by all major coding agents — and make `CLAUDE.md` a pointer to it for compatibility. Golden rule: **non-obvious information only.** Anything the agent can read from the repo itself (dependency lists, obvious structure) does not belong here; duplicated content measurably degrades agent performance and raises cost. Keep this file lean — under ~150 lines.
+
 ## 1. Project Objectives & Tech Stack
-**Mission:** To build highly maintainable, AI-native software using Spec-Driven Development (SDD) and Domain-Driven Design (DDD). 
+**Mission:** To build highly maintainable, AI-native software using Spec-Driven Development (SDD) and Domain-Driven Design (DDD).
 **Core Stack:** [Insert Language/Frameworks, e.g., TypeScript, Node.js, React]
-**Build/Test Commands:** 
-*   Test: `npm run test`
+**Build/Test Commands (exact flags matter):**
+*   Test: `npm run test` (single test: `npm run test -- -t "<name>"`)
 *   Lint: `npm run lint`
 *   Build: `npm run build`
 
@@ -12,8 +14,9 @@
 All agents MUST adhere to these global principles before writing any code:
 *   **Complexity is the Enemy:** Do not push complexity upwards. Handle unavoidable complexity inside the module so the caller's interface remains simple (Pull Complexity Downwards).
 *   **Deep Modules:** Maximize functionality while minimizing the interface. A module is only a good abstraction if a small fraction of its internal complexity is visible to its users.
-*   **Spec-Driven Execution:** No "vibe coding." You must retrieve and read the relevant Tier 3 specifications via semantic search before modifying domain logic.
+*   **Spec-Anchored Execution:** No "vibe coding." Retrieve and read the relevant Tier 3 specifications via semantic search before modifying domain logic. Acceptance criteria are written in EARS form and map to tests; code plus tests are the enforcement layer.
 *   **Read-Before-Write:** Always read dependency files and construct a Multi-Level Reasoning (MLR) plan before executing destructive file modifications.
+*   **Same-Session Spec Updates:** If your change alters a subsystem's behaviour, update its Tier 3 spec in the same session. Spec drift is a defect.
 
 ## 3. Orchestration & Trigger Tables
 Do not attempt to solve every problem with a general-purpose approach. Consult this trigger table before making changes and invoke the appropriate Domain Specialist (Tier 2) based on the files or systems you are modifying.
@@ -30,23 +33,25 @@ Do not attempt to solve every problem with a general-purpose approach. Consult t
 
 ## 4. Coding Conventions & Standards
 ### 4.1 Comments and Documentation
-*   **Write Comments First:** Interface comments must be written *before* the code body to act as a design tool. 
+*   **Write Comments First:** Interface comments must be written *before* the code body to act as a design tool.
 *   **Interface vs. Implementation:** Interface comments must describe *what* a module does and omit *how* it does it. Implementation comments go inside the method body to explain *why* the code is doing something.
 *   **Do Not Repeat Code:** Comments must describe things that aren't obvious from the code. Do not just restate the method name in a sentence.
 
 ### 4.2 Naming & Obviousness
 *   **Precise Naming:** Choose highly precise and consistent names. Avoid generic names like `result`, `x`, or `count`. Code must be "obvious" so that a reader's first guess about its behavior is correct.
-*   **Eliminate Special Cases:** Design the normal case in a way that automatically handles edge conditions. 
+*   **Eliminate Special Cases:** Design the normal case in a way that automatically handles edge conditions.
 *   **Define Errors Out of Existence:** Instead of throwing exceptions for expected edge cases, redefine the semantics of the operation so the normal behavior handles it natively (e.g., deleting a file that doesn't exist simply returns success).
 
 ## 5. Standard Checklists
 ### Pre-Commit / Pre-Completion Checklist
 Before marking a task as complete, the agent MUST verify:
 - [ ] Have I consulted the relevant Tier 3 specification document?
+- [ ] Do the acceptance criteria (EARS form) each map to a passing test?
 - [ ] Is the module interface smaller and simpler than its implementation?
 - [ ] Are all side effects (DB, API) pushed to the boundaries (Functional Core, Imperative Shell)?
 - [ ] Have I written tests that fail (RED), implemented the code (GREEN), and checked for cleanliness (REFACTOR)?
 - [ ] Did I run the build and test commands successfully?
+- [ ] If behaviour changed, did I update the Tier 3 spec in this session?
 
 ## 6. Known Global Failure Modes (Symptom / Cause / Fix)
 | Symptom | Cause | Fix |
@@ -54,6 +59,7 @@ Before marking a task as complete, the agent MUST verify:
 | Test suite fails after unrelated change | Information leakage / Shared global state | Encapsulate the shared knowledge into a single deep module. |
 | Cascading `try/catch` blocks | Punting complexity upwards | Redefine operation semantics to naturally cover the edge case. |
 | Agent context window overflows | Reading too many files without a specific plan | Use semantic search to target exact dependencies and rely on Tier 3 summaries. |
+| Output quality degrades late in session | Context rot from accumulated irrelevant context | Phase-based loading; compact or restart the session with a fresh plan. |
 
 ---
 *Reference: For detailed subsystem behavior, trigger the MCP retrieval service to fetch specific architectural documents from the `docs/specs/` directory (Tier 3).*

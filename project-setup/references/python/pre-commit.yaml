@@ -1,0 +1,12 @@
+# Canonical pre-commit config — copy this file verbatim into new projects.
+# Update the ruff and gitleaks revs to the latest at setup time.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.0
+    hooks:
+      - id: ruff          # lint
+      - id: ruff-format   # format
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks      # secret scan
