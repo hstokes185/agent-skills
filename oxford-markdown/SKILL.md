@@ -1,6 +1,6 @@
 ---
 name: oxford-markdown
-description: Format Markdown in clean, professional Oxford-style British English — em-dashes, Oxford commas, sentence-case headings from H2, and consistent list, table, code-block, and frontmatter conventions. Use this skill whenever creating, editing, or polishing any Markdown — notes, documentation, READMEs, reports, technical writing, or any `.md` file — and whenever the user asks for clean, professional, or British-style prose, even if 'Oxford' is not mentioned by name.
+description: Use when writing or polishing any Markdown. Formats it in clean, professional Oxford-style British English — em-dashes, Oxford commas, sentence-case headings from H2, and consistent list, table, code-block, and frontmatter conventions. Use this skill whenever creating, editing, or polishing any Markdown — notes, documentation, READMEs, reports, technical writing, or any `.md` file — and whenever the user asks for clean, professional, or British-style prose, even if 'Oxford' is not mentioned by name.
 metadata:
   scope: professional
 ---

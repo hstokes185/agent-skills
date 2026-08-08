@@ -1,12 +1,12 @@
 ---
 name: okf-authoring
 description: >-
-  Author and validate knowledge in the Open Knowledge Format (OKF) — the
+  Use when writing or checking anything in the Open Knowledge Format — OKF
+  bundles, concept documents, index.md or log.md files, converting an existing
+  note collection, or checking whether frontmatter conforms. OKF is the
   vendor-neutral Markdown specification for giving AI agents curated context.
-  Use when creating or reviewing an OKF bundle, writing concept documents,
-  building index.md or log.md files, converting an existing note collection to
-  OKF, or checking whether frontmatter conforms. Covers required and reserved
-  fields, bundle structure, and the rules producers and consumers must follow.
+  Covers required and reserved fields, bundle structure, and the rules
+  producers and consumers must follow.
 metadata:
   scope: professional
 ---
