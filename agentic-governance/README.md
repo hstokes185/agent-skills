@@ -34,22 +34,22 @@ Output follows a risk-officer register, not a marketing one. The skill bans em-d
 
 ## Frameworks used
 
-Every framework the skill applies, with a short description and its source. Full definitions are in `references/governance-frameworks.md`.
+Every framework the skill applies, with a short description. Full definitions are in `references/governance-frameworks.md`.
 
-| Framework | Description | Source |
-|---|---|---|
-| Governance lifecycle (five steps) | Establish ownership and oversight, define scope and boundaries, test before deployment, monitor continuously, prepare for failure (kill switch and rollback) | Oxford Saïd programme |
-| Six governance risk vectors | Autonomy and loss of control, real-world operational impact, complexity and reduced transparency, accountability and ownership, data access and security, errors at scale | Oxford Saïd programme |
-| Four red-team attack vectors | Goal hijacking, tool orchestration abuse, memory poisoning, indirect instruction injection | Oxford Saïd programme |
-| Three layers of autonomy | Test perception, reasoning, and action independently | Oxford Saïd programme |
-| Testing methodologies | LLM-as-a-judge, adversarial crescendo testing, golden datasets | Oxford Saïd programme |
-| Five governance metrics | Tool-call reliability, boundary-violation rate, step efficiency, sub-goal completion, Pass@k | Oxford Saïd programme |
-| Simulation environments | Shadow mode, digital twin, meta-testing (agent-vs-agent), with rigour proportional to privilege | Oxford Saïd programme |
-| First-principles risk assessment | Four questions on the operational limit, failure vectors, quantified consequence at scale, and oversight adequacy, plus the proportionality rule | Hacker and Holweg (2026); programme material |
-| Regulatory landscape and deployment liability | Existing law applies in full (GDPR, CCPA, IP, product liability, sector rules); the EU AI Act sets the template; liability shifts to the deployer once a model is integrated | EU AI Act; Hacker and Holweg (2026) |
-| Accountability and ownership | A named human owner for every autonomous system; explicit accountability chains; AI must not police itself | Oxford Saïd programme |
-| MCP and A2A | Model Context Protocol (agent-to-tool) and Agent-to-Agent coordination, and their effect on the governance and audit surface | Anthropic (MCP); programme material (A2A) |
-| Pre-deployment checklist | An eight-point final verification before an agent is built or deployed | Oxford Saïd programme |
+| Framework | Description |
+|---|---|
+| Governance lifecycle (five steps) | Establish ownership and oversight, define scope and boundaries, test before deployment, monitor continuously, prepare for failure (kill switch and rollback) |
+| Six governance risk vectors | Autonomy and loss of control, real-world operational impact, complexity and reduced transparency, accountability and ownership, data access and security, errors at scale |
+| Four red-team attack vectors | Goal hijacking, tool orchestration abuse, memory poisoning, indirect instruction injection |
+| Three layers of autonomy | Test perception, reasoning, and action independently |
+| Testing methodologies | LLM-as-a-judge, adversarial crescendo testing, golden datasets |
+| Five governance metrics | Tool-call reliability, boundary-violation rate, step efficiency, sub-goal completion, Pass@k |
+| Simulation environments | Shadow mode, digital twin, meta-testing (agent-vs-agent), with rigour proportional to privilege |
+| First-principles risk assessment | Four questions on the operational limit, failure vectors, quantified consequence at scale, and oversight adequacy, plus the proportionality rule |
+| Regulatory landscape and deployment liability | Existing law applies in full (GDPR, CCPA, IP, product liability, sector rules); the EU AI Act sets the template; liability shifts to the deployer once a model is integrated |
+| Accountability and ownership | A named human owner for every autonomous system; explicit accountability chains; AI must not police itself |
+| MCP and A2A | Model Context Protocol (agent-to-tool) and Agent-to-Agent coordination, and their effect on the governance and audit surface |
+| Pre-deployment checklist | An eight-point final verification before an agent is built or deployed |
 
 ## References
 
@@ -65,4 +65,4 @@ Every framework the skill applies, with a short description and its source. Full
 
 ## Attribution
 
-Frameworks are drawn from the Oxford Saïd Generative and Agentic AI programme (Academic Directors: Professors Matthias Holweg and Michael Wooldridge) and the sources listed above. All instructional content is generic and applies to any enterprise.
+Frameworks are drawn from practitioner and academic sources, including the works below. the sources listed above. All instructional content is generic and applies to any enterprise.

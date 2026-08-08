@@ -1,6 +1,6 @@
 # Quality rubric — agentic AI business case
 
-A general quality rubric for an agentic AI business case, adapted from the Oxford Saïd programme's marking criteria. Each section states what a **strong** case looks like, plus the failure modes that weaken it. Audit the finished plan and deck against every line here before delivering.
+A general quality rubric for an agentic AI business case, adapted from established assessment criteria for business cases. Each section states what a **strong** case looks like, plus the failure modes that weaken it. Audit the finished plan and deck against every line here before delivering.
 
 ## Problem definition and justification
 

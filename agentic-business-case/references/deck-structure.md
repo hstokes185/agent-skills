@@ -2,19 +2,35 @@
 
 ## The template
 
-`assets/Generative_and_Agentic_AI_Assessment_Template.pptx` — 16:9 (13.33in × 7.5in), 7 slides:
+Ask the user for a PowerPoint template at the start of deck work. Most organisations have a branded one, and using it is what makes the deck land. Build from scratch only if they have none.
 
-| Slide | Content | Action |
-|---|---|---|
-| 1 | Title | Replace placeholder with project title, organisation, author, date |
-| 2 | "How to use this template" instructions | **Delete this slide** in the final deck |
-| 3 | Context & problem definition prompts | Replace prompt text with answers |
-| 4 | Strategic justification prompts | Replace prompt text with answers |
-| 5 | Financial rationale prompts | Replace prompt text with answers |
-| 6 | High-level system design prompts | Replace prompt text with answers |
-| 7 | Risk assessment & governance prompts | Replace prompt text with answers |
+**If the user supplies a template**, inspect it first and map it to the five sections below:
 
-Target 8–12 slides, so each of the five sections typically expands to two slides. Build new slides by copying the section-slide layout ("Picture with Caption" layout in the template) so fonts and styling stay consistent. Keep the template's heading placeholder for section titles.
+```python
+from pptx import Presentation
+prs = Presentation(path)
+print(prs.slide_width, prs.slide_height)
+for i, s in enumerate(prs.slides):
+    texts = [sh.text_frame.text[:60] for sh in s.shapes if sh.has_text_frame]
+    print(i, s.slide_layout.name, texts)
+```
+
+Look for a title slide, a repeatable section layout, and any instruction or placeholder slides to delete. Reuse the template's own layouts and placeholders so fonts, colours, and masters stay intact — never impose your own styling over a corporate template.
+
+**If the user has no template**, build at 16:9 (13.33in × 7.5in) using the default `Title Slide` and `Title and Content` layouts.
+
+Either way the deck covers five sections:
+
+| Section | Content |
+|---|---|
+| 1 | Title — project, organisation, author, date |
+| 2 | Context and problem definition |
+| 3 | Strategic justification |
+| 4 | Financial rationale |
+| 5 | High-level system design |
+| 6 | Risk assessment and governance |
+
+Target 8–12 slides, so each section typically expands to two. Build new slides by copying the section layout so styling stays consistent, and delete any template instruction slides.
 
 Delete the instructions slide safely, and delete it LAST. Add every new slide first, then delete, then reorder. python-pptx names new slide parts by current slide count, so adding after a deletion reuses the deleted part name and corrupts the saved file with duplicate parts. Removal needs both the ID entry and the relationship:
 

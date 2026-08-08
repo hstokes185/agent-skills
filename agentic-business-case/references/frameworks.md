@@ -1,6 +1,6 @@
-# Frameworks reference — Oxford Saïd Generative and Agentic AI
+# Frameworks reference — agentic AI business cases
 
-All frameworks from the programme, condensed for application. Apply them in the order listed — each feeds the next.
+All frameworks, condensed for application. Apply them in the order listed — each feeds the next.
 
 ## Table of contents
 

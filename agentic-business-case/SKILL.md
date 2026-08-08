@@ -1,6 +1,6 @@
 ---
 name: agentic-business-case
-description: Build a complete, enterprise-grade business plan for an AI agent or agentic system from a user's idea — delivered as a comprehensive markdown business plan plus a companion PowerPoint deck on the included assessment template (with workflow and framework diagrams). Use this skill whenever the user provides an agentic AI project idea, use case, or opportunity and wants a business case, business plan, design proposal, executive pitch, or deployment blueprint built from it — including requests like "build a business plan for my agent idea", "turn this use case into a business case", "make the deck for my agent", or "apply the agentic frameworks to my project". Also trigger when the user mentions the PROFIT framework, the agentic viability checklist, the AI adoption matrix, or asks whether an agent idea is viable. Exhaustive interviewing of the user is expected to cover every detail the plan needs.
+description: Build a complete, enterprise-grade business plan for an AI agent or agentic system from a user's idea — delivered as a comprehensive markdown business plan plus a companion PowerPoint deck (with workflow and framework diagrams). Use this skill whenever the user provides an agentic AI project idea, use case, or opportunity and wants a business case, business plan, design proposal, executive pitch, or deployment blueprint built from it — including requests like "build a business plan for my agent idea", "turn this use case into a business case", "make the deck for my agent", or "apply the agentic frameworks to my project". Also trigger when the user mentions the PROFIT framework, the agentic viability checklist, the AI adoption matrix, or asks whether an agent idea is viable. Exhaustive interviewing of the user is expected to cover every detail the plan needs.
 metadata:
   scope: professional
 ---
@@ -10,11 +10,11 @@ metadata:
 Takes a user's agentic project idea and produces two deliverables, both reaching the quality bar in `references/rubric.md`:
 
 1. **A complete markdown business plan** — the primary deliverable. A full written business case and high-level design proposal a board member could act on, covering problem, justification, financials, design, and governance at depth.
-2. **A companion PowerPoint deck** — built on the included template `assets/Generative_and_Agentic_AI_Assessment_Template.pptx` (8–12 slides) with native-shape diagrams. The markdown is the evidence base; the deck is the executive artefact.
+2. **A companion PowerPoint deck** — 8–12 slides with native-shape diagrams, built on the user's own template where they have one. The markdown is the evidence base; the deck is the executive artefact.
 
-The work applies to any enterprise. Do not assume a specific organisation, sector, or context unless the user states it. The bundled PowerPoint template is the one organisation-specific asset; everything else is generic.
+The work applies to any enterprise. Do not assume a specific organisation, sector, or context unless the user states it. Ask for the user's deck template at the start of deck work; build from scratch only if they have none.
 
-This skill is self-contained. Everything it needs is in this directory (`references/` and `assets/`); it has no external dependencies.
+This skill is self-contained. Everything it needs is in `references/`; it has no external dependencies.
 
 ## Required reading before starting
 
@@ -82,11 +82,11 @@ The appendix carries the full worksheets — the scored viability checklist, the
 
 ### Step 4 — Build the deck
 
-Follow `references/deck-structure.md` and `references/formatting.md` exactly: copy the template, delete the instructions slide last, fill the five section slides, add expansion slides by copying the section layout, and build the workflow diagram with native python-pptx shapes (never a raster image).
+Follow `references/deck-structure.md` and `references/formatting.md` exactly: copy the template, delete any instruction slides last, fill the five section slides, add expansion slides by copying the section layout, and build the workflow diagram with native python-pptx shapes (never a raster image).
 
 Non-negotiables:
 
-- Every prompt from the template answered somewhere
+- Every section of the plan represented somewhere in the deck
 - Frameworks named visibly (slide labels, table headings)
 - Workflow diagram with HITL gates showing exact thresholds (amounts, confidence scores)
 - Risk → control mapping table including audit logging, kill switch, and sandbox protocol
