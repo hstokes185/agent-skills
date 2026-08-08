@@ -1,6 +1,6 @@
 # Agent skills
 
-Portable skills for AI coding agents. Generated from a private library — do not edit here.
+Portable skills for AI coding agents. Each directory is a self-contained `SKILL.md` bundle following the Agent Skills format — copy the ones you want into your agent's skills directory.
 
 | Skill | Description |
 |---|---|
