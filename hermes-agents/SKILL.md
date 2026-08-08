@@ -143,17 +143,39 @@ hermes --profile <name> config set compression.summary_model "<provider/model>"
 
 - A `payment / credit error` in the logs usually means *not authenticated* for a provider that was never configured. Read the next line before checking a balance
 
-## Diagnostics that mislead
+## When an agent is unresponsive
 
-| Symptom | Actual meaning |
-|---|---|
-| Agent gives generic answers after a config change | Stale session. Restart clears the process cache; `/new` clears the conversation. **Both are needed** |
-| `Main process exited, code=exited, status=1/FAILURE` | Hermes exits `1` on `SIGTERM`. Every clean restart logs it |
-| `status=75/TEMPFAIL` | Polling retries exhausted, almost always because something else called `getUpdates` on the same bot |
-| `Telegram polling conflict` | A second poller stole the long poll. If a health check just ran, that was the health check |
+Reach for one command, not forty minutes of poking:
 
-> [!warning] Never poll a live bot's `getUpdates` as a health check
-> It steals the long poll and can consume pending messages before the gateway sees them. Use `sendMessage` to prove reachability, and read the journal for everything else.
+```bash
+python3 ~/.agents/agent-tools/agent_doctor.py            # all profiles
+python3 ~/.agents/agent-tools/agent_doctor.py <profile>  # one
+```
+
+It checks: profile dir exists, dangling SOUL.md symlink, broken skill links,
+service active, restart count, LLM key in process environment, token reachability,
+allowlist, home channel, webhook state, second poller, polling conflicts, agent
+turns processed, and recent journal errors. Every check exists because a real
+outage was misdiagnosed without it.
+
+> [!warning] agent_doctor never calls `getUpdates`
+> That endpoint steals the long poll and can swallow pending messages.
+> Read references/diagnostics.md for the full story on what happens.
+
+### Four patterns to recognise
+
+| Surface symptom | Real problem | How to fix |
+|---|---|---|
+| Answers as a generic assistant, not as itself | Stale session — soul and skills load at session creation. Restart alone is not enough | `hermes --profile <name> gateway restart` **and** `/new` in the conversation |
+| Gateway exits status=75/TEMPFAIL then restarts into the same fight | Something else called `getUpdates` on the same bot. Two of the four incidents on 2026-08-08 were caused by the diagnostic itself | Use `sendMessage` for reachability. Everything else from `journalctl` or `agent_doctor.py` |
+| Agent tool calls fail silently — nothing arrives | Kanban worker or cron dispatch has no `~/.local/bin` on PATH. Bare `hermes send` produces nothing | Use absolute paths: `~/.local/bin/hermes send ...` in every instruction |
+| A one-off fix was applied fleet-wide but the newest agent does not have it | The agent was created after the change. Applies to any config pin, drop-in, or cron job | Apply every fleet-wide change to every new agent |
+
+`status=1/FAILURE` on restart is normal — Hermes exits code 1 on SIGTERM. Read
+the line before: `Shutdown context: signal=SIGTERM` confirms a clean stop.
+Without it, the exit is genuine — investigate.
+
+Read `references/diagnostics.md` for the expanded version of the four causes.
 
 ## Renaming and retiring
 
