@@ -4,7 +4,7 @@ Production rules for the agentic-governance skill's output. Most governance deli
 
 ## Currency
 
-Default to USD unless the user specifies otherwise. If figures appear, state the conversion rate and date whenever an original figure is in another currency (for example, '£40k salary equivalent, converted at 1.3382 on 10 June 2026 = $53.5k'). Keep one currency across the whole document — never mix symbols.
+Default to the currency the user specifies. If figures appear, state the conversion rate and date whenever an original figure is in another currency (for example, '£40k salary equivalent, converted at 1.3382 on 10 June 2026 = $53.5k'). Keep one currency across the whole document — never mix symbols.
 
 ## Derived figures: single calculation block
 
