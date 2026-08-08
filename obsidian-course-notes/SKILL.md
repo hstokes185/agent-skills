@@ -7,6 +7,8 @@ description: >-
   transcripts, or educational material for Obsidian. Trigger keywords: course
   notes, lecture notes, transcript, lesson notes, walkthrough notes, learning
   notes, educational content, course formatting, video course.
+metadata:
+  scope: professional
 ---
 # Obsidian Course Notes
 
