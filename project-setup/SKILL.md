@@ -112,7 +112,7 @@ real values). Write the settings loader at `src/<pkg>/config.py`
 following `references/python/config.py`: a `Settings` class with
 `SettingsConfigDict(env_file=".env")`, required keys without defaults,
 optional keys with defaults, and a module-level singleton
-`settings = Settings()  # type: ignore[call-arg]`. Everything else
+`settings = Settings()`. Everything else
 imports `settings` — one import, one source of truth.
 
 ### 4. Dependencies, sorted into groups
@@ -124,6 +124,15 @@ uv add --dev ruff mypy pytest pre-commit
 
 `uv sync --no-dev` for the production image, `uv sync` for development.
 `uv add` writes both `pyproject.toml` and `uv.lock`; commit both.
+
+Next, configure the tool tables in `pyproject.toml` — `[tool.mypy]`,
+`[tool.ruff]`, `[tool.pytest.ini_options]` — per the canonical file at
+`references/python/pyproject.toml`. Add `[tool.mypy]` with `strict = true`.
+
+> In TOML, a `[tool.*]` table header ends the `[project]` section. Every
+> `[tool.*]` table must come after all keys belonging to `[project]`
+> (name, version, dependencies, etc.). Placing `[tool.mypy]` before
+> `dependencies` silently absorbs those keys into the mypy table.
 
 ### 5. Auto-activate the venv with direnv
 
@@ -140,29 +149,68 @@ Three hooks, pinned to specific revisions: `ruff` (lint), `ruff-format`
 
 ```bash
 uv run pre-commit install
+git add -A
 uv run pre-commit run --all-files
 ```
+
+> On a fresh repo with no commits, every file is untracked.
+> `pre-commit run --all-files` only checks files git knows about, so
+> without the stage step it reports `(no files to check)` and runs
+> nothing — a gate that reports success without executing is worse than
+> no gate, because it stops anyone looking again.
 
 ### 7. CI workflow
 
 `.github/workflows/ci.yml` per `references/python/ci.yml`: checkout →
-setup-uv → `uv sync` → `uv run ruff check .` → `uv run mypy src` →
-`uv run pytest`. CI does not run the formatter — pre-commit owns
+setup-uv → `uv sync --frozen` → `uv run ruff check .` → `uv run mypy src`
+→ `uv run pytest`. CI does not run the formatter — pre-commit owns
 formatting.
 
-### 8. First eval
+### 8. Named commands (Makefile)
+
+Add `references/python/Makefile` as `Makefile` at the project root.
+This gives agents and humans the same verbs:
+
+```makefile
+make lint        # ruff check
+make format-check # ruff format --check
+make typecheck   # mypy src
+make test        # pytest
+```
+
+CI calls `make lint` (not `uv run make` — `make` is a system tool, not
+a Python dependency). The Makefile targets call `uv run` internally.
+
+> `make` is not present by default on Windows. On Windows, run the
+> `uv run` commands directly instead.
+
+### 9. First eval
 
 Follow `references/python/eval_template.py`: a `CASES` list of
 `(input, expected)` tuples, `@pytest.mark.parametrize`, exact-match
 assertion to start. Because it is pytest, CI already runs it.
 
-### 9. Verify the full pipeline
+### 10. Verify the full pipeline
 
 ```bash
-uv run ruff check . && uv run ruff format --check . && uv run mypy src && uv run pytest
+uv run ruff check . && uv run ruff format --check . && uv run mypy src --strict && uv run pytest
 ```
 
 All must pass. Same sequence as CI.
+
+### 11. First commit
+
+With the pipeline green, set git identity (if not already set globally) and
+make the first commit:
+
+```bash
+git config user.name "YOUR_NAME" && git config user.email "YOUR_EMAIL"
+git add -A && git commit -m "Initial scaffold: Python project with quality gates"
+```
+
+On a fresh machine with no global git config, `git commit` fails without
+this step. The commit message captures the scaffolding intent — every
+subsequent commit is a real change on top of that foundation.
 
 ## TypeScript/React track
 
@@ -285,7 +333,7 @@ Foundations (always):
 - [ ] Exactly one formatter, enforced in CI
 
 Python track: `pyproject.toml` + `uv.lock`, `.python-version`, `.envrc`,
-`src/<pkg>/config.py`, ruff + mypy + pytest green.
+`src/<pkg>/config.py`, ruff + mypy (strict) + pytest green.
 
 TypeScript track: `pnpm-lock.yaml`, `.nvmrc`, strict `tsconfig`,
 `src/config.ts` (Zod), Biome (or ESLint+Prettier) + `tsc --noEmit` +
@@ -294,8 +342,11 @@ Vitest green, `build` succeeds.
 ## Reference files
 
 > **`references/python/`** — canonical Python configs: `ci.yml`,
-> `pre-commit.yaml`, `config.py`, `eval_template.py`. Copy verbatim and
-> adapt names; update pinned hook revisions to latest at setup time.
+> `pre-commit.yaml`, `config.py`, `eval_template.py`, `pyproject.toml`,
+> `Makefile`, `README.md`. Copy verbatim and adapt names/placeholders.
+> Run `uv run pre-commit autoupdate` to update pinned hook revisions
+> to the latest tags (replaces manual curl-and-grep) before the first
+> commit.
 
 > **`references/typescript/`** — canonical TS configs: `ci.yml`. Copy
 > verbatim and adapt.

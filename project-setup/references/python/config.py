@@ -6,8 +6,11 @@
 # Key rules:
 # - Required keys: no default — crashes at startup if missing
 # - Optional keys: provide a default
-# - Module-level singleton: `settings = Settings()` with mypy suppression
+# - Module-level singleton: `settings = Settings()`
 # - Every other module imports `settings`, never calls os.getenv() directly
+#
+# If the Settings class gains a required field (a key with no default),
+# reinstate `# type: ignore[call-arg]` on the `settings = Settings()` line.
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -28,4 +31,4 @@ class Settings(BaseSettings):
     <OPTIONAL_KEY>: str = ""
 
 
-settings = Settings()  # type: ignore[call-arg]
+settings = Settings()

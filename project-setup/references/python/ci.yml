@@ -18,14 +18,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Install dependencies
-        run: uv sync
+      - name: Install dependencies (fail on lockfile drift)
+        run: uv sync --frozen
 
-      - name: Lint and format check
+      - name: Lint
         run: uv run ruff check .
 
-      - name: Type check
-        run: uv run mypy src
+      - name: Type check (strict)
+        run: uv run mypy src --strict
 
       - name: Tests
         run: uv run pytest

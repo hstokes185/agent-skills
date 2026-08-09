@@ -1,0 +1,42 @@
+# Canonical pyproject.toml — copy the relevant sections into the project
+# created by `uv init --package`.
+#
+# IMPORTANT: [tool.*] tables MUST come after every key belonging to [project].
+# In TOML, a table header ends the preceding table. If [tool.mypy]
+# or [tool.ruff] appears before `dependencies`, those keys silently
+# become part of the tool table instead of [project].
+#
+# Correct order: [project] keys → [build-system] → [tool.*] tables.
+
+[project]
+name = "<pkg>"
+version = "0.1.0"
+description = "<one-line description>"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # Runtime dependencies added by `uv add <pkg>` go here automatically
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+warn_unused_ignores = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM", "ARG", "C4", "ISC", "PIE"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
