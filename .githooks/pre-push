@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Gate on publishing to the public skill library.
+#
+# 1. Mechanical: refuse outright if the content carries internal detail.
+# 2. Human: tell Henry what is about to become public, every time.
+#
+# The notification is not an approval prompt — a push is already a decision.
+# It exists so nothing reaches the public repo without him knowing it did.
+#
+# This lived in one machine's .git/hooks, which made it a local habit rather
+# than a gate: a clone anywhere else pushed with nothing checking it, and
+# nothing in the repository said the check was supposed to exist. It is tracked
+# here now and wired by bootstrap.sh, which sets core.hooksPath.
+#
+# Exit codes: 0 = allowed to push, 1 = refused.
+set -uo pipefail
+
+REPO="$(git rev-parse --show-toplevel)"
+NAMES="hestia,diablo,mei,chiron,henry,hstokes,agent-droplet"
+HERMES="$HOME/.local/bin/hermes"
+CHECKER="${PUBLIC_SAFE_CHECKER:-$HOME/.agents/agent-tools/check_public_safe.py}"
+
+# A leak gate that cannot find its checker must refuse. Carrying on would let a
+# push through on a machine where the check is simply not installed, which is
+# the exact failure that moving this file into the repository is meant to end.
+if [ ! -f "$CHECKER" ]; then
+    echo "pre-push: REFUSED — no checker at $CHECKER, so nothing checked this push." >&2
+    echo "Clone agent-tools to ~/.agents/agent-tools, or set PUBLIC_SAFE_CHECKER." >&2
+    exit 1
+fi
+
+python3 "$CHECKER" "$REPO" --names "$NAMES" || exit 1
+
+# What is actually going out, compared with what the remote already has.
+range="origin/main..HEAD"
+git rev-parse --verify -q origin/main >/dev/null 2>&1 || range="HEAD"
+files=$(git diff --name-only "$range" 2>/dev/null | grep -v '^README' | head -12)
+commits=$(git log --oneline "$range" 2>/dev/null | head -6)
+
+[ -z "$commits" ] && exit 0
+
+msg="Publishing to the PUBLIC skills repo.
+
+Commits:
+$commits
+
+Files:
+${files:-none}
+
+If this should not be public, revert it now — it cannot be unpublished."
+
+if [ -x "$HERMES" ]; then
+    "$HERMES" send -t telegram "$msg" >/dev/null 2>&1 \
+      || echo "pre-push: could not send the notification, continuing" >&2
+fi
+exit 0
